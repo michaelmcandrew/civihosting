@@ -18,6 +18,4 @@ while($client=mysql_fetch_object($clients)){
 		exec("ln -s {$backup_dir}/$date {$backup_dir}/latest\n");
 	}
 };
-
-
 ?>

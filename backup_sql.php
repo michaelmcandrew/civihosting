@@ -1,5 +1,6 @@
 <?php
 // connect to database
+require_once('connect_to_database.php');
 
 if(!in_array($argv[1], array('daily','weekly','monthly'))){
 	echo "Oops, you didn't enter a valid command line variable (daily, weekly, monthly)\n";
@@ -26,21 +27,4 @@ while($database=mysql_fetch_object($databases)){
 	exec("gzip {$path}/{$filename}");
 	
 };
-
-
-/**twice daily backup
-
-1) get the list of databases to backup
-
-2) back them up
-
-
-
-**/
-
-
-
-
-
-
 ?>

@@ -1,5 +1,6 @@
 <?php
 // connect to database
+require_once('connect_to_database.php');
 
 $trim=array(
 	'daily' => '-3 months',
@@ -11,7 +12,7 @@ $trim=array(
 foreach($trim as $time_period => $limit){
 	$delete_date=new DateTime($limit);
 	require_once('connect_to_database.php');
-	$clients=mysql_query("SELECT name FROM `client ORDER BY 1 ASC");
+	$clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC");
 	while($client=mysql_fetch_object($clients)){
 		$path="/backup/clients/{$client->name}/sql/{$time_period}";
 		chdir($path);
@@ -21,28 +22,10 @@ foreach($trim as $time_period => $limit){
 				//is this file older than the date at which we consider it too old to keep?
 				$create_date=new DateTime('@'.filectime($file));
 				if($create_date < $delete_date){
-					echo "I will delete ".$file."\n";
 					unlink($file);
 				}
 			}
 		}	
 	}
 }
-
-
-/**twice daily backup
-
-1) get the list of databases to backup
-
-2) back them up
-
-
-
-**/
-
-
-
-
-
-
 ?>
