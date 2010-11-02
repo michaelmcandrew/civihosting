@@ -19,7 +19,7 @@ while($database=mysql_fetch_object($databases)){
 	$path="/backup/clients/{$database->client}/sql/{$time_period}";
 	if(!file_exists($path)){
 		echo "Creating directory $path\n";
-		mkdir($path, 0644, 1);
+		mkdir($path, 0755, 1);
 	}
 	echo "Dumping database {$database->name}\n";
 	exec("mysqldump {$database->name} > {$path}/{$filename}");

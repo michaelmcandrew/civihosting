@@ -10,7 +10,7 @@ while($client=mysql_fetch_object($clients)){
 		$date=date('Ymd-Hi');
 		$backup_dir="/backup/clients/{$client->name}/files";
 		if(!file_exists($backup_dir)){
-			mkdir($backup_dir, 0644, 1);
+			mkdir($backup_dir, 0755, 1);
 		}
 		exec("rsync -aP --link-dest={$backup_dir}/latest {$path} {$backup_dir}/$date\n");
 		exec("rm -f {$backup_dir}/latest\n");
