@@ -5,7 +5,7 @@ require_once('connect_to_database.php');
 
 $clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC");
 while($client=mysql_fetch_object($clients)){
-	$path="/m/htdocs/{$client->name}/sites/default/files/";
+	$path="/var/www/{$client->name}/sites/default/files/";
 	if(file_exists($path)){
 		echo "$path exists\n";
 		$date=date('Ymd-Hi');
