@@ -44,7 +44,7 @@ foreach($databases as $database) {
 	mysql_query("CREATE DATABASE {$client_short_name}_{$database->name}\n");
 }
 
-mysql_query("GRANT ALL PRIVILEGES ON `[{$client_short_name}]\_%` .  * TO '[{$client_short_name}]'@'localhost' IDENTIFIED BY '[{$client_short_name}]'");
+mysql_query("GRANT ALL PRIVILEGES ON `{$client_short_name}\_%` .  * TO '{$client_short_name}'@'localhost' IDENTIFIED BY '{$client_short_name}'");
 
 echo "\nSorted! ... I think! :p\n";
 
