@@ -1,6 +1,7 @@
 <?php
 // connect to database
 require_once('include.php');
+check_root();
 
 if(!in_array($argv[1], array('daily','weekly','monthly'))){
 	echo "Oops, you didn't enter a valid command line variable (daily, weekly, monthly)\n";
@@ -9,7 +10,6 @@ if(!in_array($argv[1], array('daily','weekly','monthly'))){
 
 $time_period=$argv[1];
 
-require_once('connect_to_database.php');
 $databases=mysql_query("SELECT c.name as client, d.name as `database`, concat(c.name, '_', d.name) as name FROM `client_database` AS cd
 JOIN `client` AS c ON cd.client_id=c.id
 JOIN `database` AS d ON cd.database_id=d.id

@@ -81,11 +81,16 @@ ch_exec("drush dl drupal");
 ch_exec("mv {$webroot_temp}/drupal-* $webroot");
 chdir($webroot);
 ch_exec("chown -R www-data:www-data {$webroot}");
+ch_exec("cp -p {$webroot}/sites/default/default.settings.php {$webroot}/sites/default/settings.php");
 
 echo "\n* Downloaded Drupal!\n";
 
+ch_exec("sudo adduser --disabled-password --gecos \"\" {$client_short_name}");
+echo "\n* Added user!\n";
+
+
 echo "\n* Sorted! ... I think! :p\n";
 
-echo "\n* Enable your site with 'sudo a2ensite {$client_short_name}'\n";
+echo "\n* Enable your site with 'sudo a2ensite {$client_short_name}' and restart your server with 'sudo apache2ctl graceful'\n";
 
 ?>

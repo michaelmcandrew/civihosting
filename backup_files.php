@@ -2,7 +2,8 @@
 // connect to database
 
 require_once('include.php');
-
+check_root();
+ 
 $clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC");
 while($client=mysql_fetch_object($clients)){
 	$path="/var/www/{$client->name}/sites/default/files/";
