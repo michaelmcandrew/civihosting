@@ -5,7 +5,7 @@ check_root();
 
 echo "\nWARNING! No error checking, validation, or sanitation here! :)\n";
 
-if(!TEST){
+if(!(TEST == 1)){
 	echo "\nEnter client full name: ";
 	$client_full_name = trim(fgets(STDIN));
 	//TODO validation of client_full_name
@@ -44,7 +44,7 @@ echo "\nAre you sure that you want to create a ".implode(' and ', $databases)." 
 
 $input = trim(fgets(STDIN));
 if(strtolower($input) != 'y'){
-	echo "\nOK - see ya!\n";
+	echo "\nOK - see ya!\n\n";
 	exit;
 }
 
