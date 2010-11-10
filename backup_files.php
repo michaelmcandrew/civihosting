@@ -1,7 +1,7 @@
 <?php
 // connect to database
 
-require_once('connect_to_database.php');
+require_once('include.php');
 
 $clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC");
 while($client=mysql_fetch_object($clients)){
@@ -12,9 +12,9 @@ while($client=mysql_fetch_object($clients)){
 		if(!file_exists($backup_dir)){
 			mkdir($backup_dir, 0755, 1);
 		}
-		exec("rsync -aP --link-dest={$backup_dir}/latest {$path} {$backup_dir}/$date\n");
-		exec("rm -f {$backup_dir}/latest\n");
-		exec("ln -s {$backup_dir}/$date {$backup_dir}/latest\n");
+		ch_exec("rsync -aP --link-dest={$backup_dir}/latest {$path} {$backup_dir}/$date\n");
+		ch_exec("rm -f {$backup_dir}/latest\n");
+		ch_exec("ln -s {$backup_dir}/$date {$backup_dir}/latest\n");
 	}
 };
 ?>

@@ -1,6 +1,6 @@
 <?php
 // connect to database
-require_once('connect_to_database.php');
+require_once('include.php');
 
 if(!in_array($argv[1], array('daily','weekly','monthly'))){
 	echo "Oops, you didn't enter a valid command line variable (daily, weekly, monthly)\n";
@@ -22,9 +22,9 @@ while($database=mysql_fetch_object($databases)){
 		mkdir($path, 0755, 1);
 	}
 	echo "Dumping database {$database->name}\n";
-	exec("mysqldump {$database->name} > {$path}/{$filename}");
+	ch_exec("mysqldump {$database->name} > {$path}/{$filename}");
 	echo "Zipping {$filename}\n";
-	exec("gzip {$path}/{$filename}");
+	ch_exec("gzip {$path}/{$filename}");
 	
 };
 ?>
