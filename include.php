@@ -18,4 +18,10 @@ function ch_exec($command){
 	}
 }
 
+function check_root(){
+	if($_ENV['ROOT'] !='root'){
+		echo "\nYou are not root - byee!\n";
+		exit;
+}
+
 ?>
