@@ -1,0 +1,5 @@
+Long term aim is to 'open source the CiviCRM hosting community' by providing a way 
+
+This is likely to involve such cool tools as chef/puppet.
+
+While this is brewing, these scripts should begin to outline the processes involved in setting up and maintaining clients.
