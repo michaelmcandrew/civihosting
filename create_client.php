@@ -5,7 +5,7 @@ check_root();
 
 echo "\nWARNING! No error checking, validation, or sanitation here! :)\n";
 
-if(!(TEST == 1)){
+if(TEST != 1)){
 	echo "\nEnter client full name: ";
 	$client_full_name = trim(fgets(STDIN));
 	//TODO validation of client_full_name
@@ -13,7 +13,7 @@ if(!(TEST == 1)){
 	echo "\nEnter client short name (only lowercase letters please): ";
 	$client_short_name = trim(fgets(STDIN));
 
-	echo "\What domain are you running this site from?: ";
+	echo "\nWhat domain are do you want to run this site on?: ";
 	$domain = trim(fgets(STDIN));
 
 	//TODO validation of client_short_name
