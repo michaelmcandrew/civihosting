@@ -5,7 +5,7 @@ check_root();
 
 echo "\nWARNING! No error checking, validation, or sanitation here! :)\n";
 
-if(TEST != 1)){
+if(TEST != 1){
 	echo "\nEnter client full name: ";
 	$client_full_name = trim(fgets(STDIN));
 	//TODO validation of client_full_name
