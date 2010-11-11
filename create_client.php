@@ -13,7 +13,7 @@ if(TEST != 1){
 	echo "\nEnter client short name (only lowercase letters please): ";
 	$client_short_name = trim(fgets(STDIN));
 
-	echo "\nWhat domain are do you want to run this site on?: ";
+	echo "\nWhat domain do you want to run this site on?: ";
 	$domain = trim(fgets(STDIN));
 
 	//TODO validation of client_short_name
