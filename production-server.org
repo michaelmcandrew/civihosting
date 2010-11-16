@@ -1,0 +1,68 @@
+Notes: This can be thought of as the basis for a puppet script.  Then likely that we will split this puppet script into different functions to allow these services to be split over different physical servers if that person wants to, e.g. MySQL server and apache server at some point.
+
+Note: The results of following the instructions below are available as an amazon ami (ami-5e0e3b2a).  You will need to change the hostname, mysql root password (dpkg-reconfigure mysql), and reboot
+
+* sudo aptitude update and upgrade
+sudo apt-get update
+sudo apt-get upgrade
+* set time to GMT
+sudo dpkg-reconfigure tzdata
+* install emacs
+sudo aptitude install emacs
+* better configure .bashrc for history recording, etc.
+emacs .bashrc
+HISTSIZE=100000
+HISTFILESIZE=200000
+HISTTIMEFORMAT="%a %F %T "
+* change host name
+* reboot
+* install required programs
+sudo apt-get install postfix apache2 mysql-server php5 libapache2-mod-php5 php5-cli php5-mysql ntp apticron munin munin-node munin-plugins-extra
+mysql root password: root
+as 'Internet site' with default FQDN (which should be picked up from hostname)
+* configure programs that need a bit more configuration
+** ntpd (if this server is in Ireland, use Irish time servers)
+sudo emacs /etc/ntp.conf
+server 3.ie.pool.ntp.org
+server 1.europe.pool.ntp.org
+server 0.europe.pool.ntp.org
+** apache
+sudo a2enmod rewrite
+sudo /etc/init.d/apache2 graceful
+** mysql (create a .my.cnf file)
+emacs ~/.my.cnf
+[client]
+user=root
+pass=root
+** apticron (configure email address)
+sudo emacs /etc/apticron/apticron.conf
+EMAIL="michaelmcandrew@thirdsectordesign.org"
+** munin
+*** configure munin.conf
+sudo emacs /etc/munin/munin.conf
+Uncomment the following lines 
+dbdir   /var/lib/munin
+htmldir /var/cache/munin/www
+logdir /var/log/munin
+rundir  /var/run/munin
+contact.email.command mail -s "Munin-notification for ${var:group} :: ${var:host}" michaelmcandrew@thirdsectordesign.org
+[argentina.thirdsectordesign.org]
+    address 127.0.0.1
+    use_node_name yes
+*** edit apache config (and reset server)
+sudo emacs /etc/apache2/conf.d/munin
+        Allow from all # localhost 127.0.0.0/8 ::1
+sudo /etc/init.d/apache2 graceful
+*** enable relevant plugins (and wait for munin to update)
+cd /etc/munin/plugins/
+sudo ln -s /usr/share/munin/plugins/mysql_* .
+sudo ln -s /usr/share/munin/plugins/postfix_mail* .
+sudo ln -s /usr/share/munin/plugins/apt .
+sudo rm mysql_isam_space_
+sudo /etc/init.d/munin-node restart
+If you don't want to wait for munin to update
+sudo -i
+su - munin --shell=/bin/bash
+munin-cron
+exit
+exit
