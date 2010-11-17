@@ -10,7 +10,7 @@ if(!in_array($argv[1], array('daily','weekly','monthly'))){
 
 $time_period=$argv[1];
 
-$databases=mysql_query("SELECT c.name as client, d.name as `database`, concat(c.name, '_', d.name) as name FROM `client_database` AS cd
+$databases=ch_query("SELECT c.name as client, d.name as `database`, concat(c.name, '_', d.name) as name FROM `client_database` AS cd
 JOIN `client` AS c ON cd.client_id=c.id
 JOIN `database` AS d ON cd.database_id=d.id
 ORDER BY 1 ASC");
