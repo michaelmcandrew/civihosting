@@ -1,5 +1,5 @@
 <?php
-require_once('../include.php');
+require_once('include.php');
 
 $drupal_cron_clients=ch_query("SELECT client.name
 FROM client_cron
