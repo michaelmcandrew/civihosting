@@ -19,8 +19,13 @@ HISTTIMEFORMAT="%a %F %T "
 * install required programs
 sudo apt-get install postfix apache2 mysql-server php5 libapache2-mod-php5 php5-cli php5-mysql ntp apticron munin munin-node munin-plugins-extra
 mysql root password: root
-as 'Internet site' with default FQDN (which should be picked up from hostname)
+postfix as 'Internet site' with default FQDN (which should be picked up from hostname)
 * configure programs that need a bit more configuration
+** postfix (redirect root mail to your username)
+sudo emacs /etc/aliases
+root:          michaelmcandrew@thirdsectordesign.org
+sudo newaliases
+sudo emacs /etc/ntp.conf
 ** ntpd (if this server is in Ireland, use Irish time servers)
 sudo emacs /etc/ntp.conf
 server 3.ie.pool.ntp.org
@@ -34,9 +39,6 @@ emacs ~/.my.cnf
 [client]
 user=root
 pass=root
-** apticron (configure email address)
-sudo emacs /etc/apticron/apticron.conf
-EMAIL="michaelmcandrew@thirdsectordesign.org"
 ** munin
 *** configure munin.conf
 sudo emacs /etc/munin/munin.conf
