@@ -1,6 +1,6 @@
 <?php
-// connect to database
-require_once('connect_to_database.php');
+require_once('include.php');
+check_root();
 
 $trim=array(
 	'daily' => '-3 months',
@@ -8,11 +8,9 @@ $trim=array(
 	'monthly' => '-300 years'
 	);
 
-
 foreach($trim as $time_period => $limit){
 	$delete_date=new DateTime($limit);
-	require_once('connect_to_database.php');
-	$clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC");
+	$clients=ch_query("SELECT name FROM `client` ORDER BY 1 ASC", 'force');
 	while($client=mysql_fetch_object($clients)){
 		$path="/backup/clients/{$client->name}/sql/{$time_period}";
 		// It might not always exist, for example if the monthly cron hasn't run yet.
@@ -24,7 +22,7 @@ foreach($trim as $time_period => $limit){
 					//is this file older than the date at which we consider it too old to keep?
 					$create_date=new DateTime('@'.filectime($file));
 					if($create_date < $delete_date){
-						unlink($file);
+						ch_exec("rm $path/$file");
 					}
 				}
 			}			

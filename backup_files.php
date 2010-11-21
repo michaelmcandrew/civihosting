@@ -1,10 +1,8 @@
 <?php
-// connect to database
-
 require_once('include.php');
 check_root();
  
-$clients=mysql_query("SELECT name FROM `client` ORDER BY 1 ASC",'force');
+$clients=ch_query("SELECT name FROM `client` ORDER BY 1 ASC",'force');
 while($client=mysql_fetch_object($clients)){
 	$path="/var/www/{$client->name}/sites/default/files/";
 	if(file_exists($path)){
