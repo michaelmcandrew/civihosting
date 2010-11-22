@@ -57,7 +57,8 @@ ch_query("INSERT INTO client (name,full_name) VALUES ('{$client_short_name}', '{
 $client_id=mysql_insert_id();
 
 foreach($databases as $database) {
-	$database=mysql_fetch_object(ch_query("SELECT id, name FROM `database` WHERE `name` = '{$database}'"));
+	$query=ch_query("SELECT id, name FROM `database` WHERE `name` = '{$database}'",'force');
+	$database=mysql_fetch_object($query);
 	ch_query("INSERT INTO client_database (client_id,database_id) VALUES ({$client_id},".$database->id.")");
 	ch_query("CREATE DATABASE {$client_short_name}_{$database->name}");
 }
