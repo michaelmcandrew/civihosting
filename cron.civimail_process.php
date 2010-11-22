@@ -12,4 +12,3 @@ while($client=mysql_fetch_object($drupal_cron_clients)){
 }
 ch_exec(implode(";\n", $exec));
 ?>
-

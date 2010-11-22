@@ -79,13 +79,16 @@ ch_exec("mv {$vhost_tempfilename} /etc/apache2/sites-available/{$client_short_na
 
 //create apache directory for vhost
 $webroot="/var/www/$client_short_name";
+$temp_webroot="/temp/$client_short_name";
 echo"
-You should probably do the following...
+You should PROBABLY ONE LINE AT A TIME! do the following...
 
-cd $webroot
-drush dl drupal
-chown -R www-data:www-data {$webroot}
-cp -p {$webroot}/sites/default/default.settings.php {$webroot}/sites/default/settings.php
+sudo mkdir $temp_webroot
+sudo cd $temp_webroot
+sudo drush dl drupal
+sudo mv /temp/$client_short_name/drupal* $webroot
+sudo chown -R www-data:www-data {$webroot}
+sudo cp -p {$webroot}/sites/default/default.settings.php {$webroot}/sites/default/settings.php
 sudo a2ensite {$client_short_name}
 sudo apache2ctl graceful
 
