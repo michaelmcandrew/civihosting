@@ -3,7 +3,7 @@ mysql_connect('localhost', 'root', 'root');
 mysql_select_db('civihosting');
 array_walk($argv, 'lower');
 
-function ch_query($query, $force){
+function ch_query($query, $force=''){
 	if(!is_test() || $force=='force'){
 		return mysql_query($query);
 	} else {
