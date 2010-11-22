@@ -5,13 +5,18 @@ check_root();
 
 echo "\nWARNING! No error checking, validation, or sanitation here! :)\n";
 
-if(TEST != 1){
+if(!is_test()){
 	echo "\nEnter client full name: ";
 	$client_full_name = trim(fgets(STDIN));
 	//TODO validation of client_full_name
 
 	echo "\nEnter client short name (only lowercase letters please): ";
 	$client_short_name = trim(fgets(STDIN));
+	
+	if(strlen($client_short_name) < 1){
+		echo 'Would be dangerous to continue without a client name!';
+		exit;
+	}
 
 	echo "\nWhat domain do you want to run this site on?: ";
 	$domain = trim(fgets(STDIN));
@@ -62,8 +67,7 @@ ch_query("GRANT ALL PRIVILEGES ON `{$client_short_name}\_%` .  * TO '{$client_sh
 echo "\n* Created databases!\n";
 
 //create standard vhost config file
-$vhost_template = file_get_contents('vhost.template');
-$vhost_file=str_replace(array('xxDIRxx','xxDOMAINxx'),array($client_short_name, $domain), $vhost_template);
+$vhost_file=str_replace(array('xxDIRxx','xxDOMAINxx'),array($client_short_name, $domain), CIVIHOSTING_VHOST_TEMPLATE);
 
 echo "\n* Wrote new configuration file!\n";
 
@@ -73,24 +77,19 @@ file_put_contents($vhost_tempfilename, $vhost_file);
 ch_exec("mv {$vhost_tempfilename} /etc/apache2/sites-available/{$client_short_name}");
 
 //create apache directory for vhost
-$webroot_temp="/tmp/{$client_short_name}";
-$webroot="/var/www/{$client_short_name}";
-mkdir($webroot_temp);
-chdir($webroot_temp);
-ch_exec("drush dl drupal");
-ch_exec("mv {$webroot_temp}/drupal-* $webroot");
-chdir($webroot);
-ch_exec("chown -R www-data:www-data {$webroot}");
-ch_exec("cp -p {$webroot}/sites/default/default.settings.php {$webroot}/sites/default/settings.php");
+$webroot="/var/www/$client_short_name";
+echo"
+You should probably do the following...
 
-echo "\n* Downloaded Drupal!\n";
+cd $webroot
+drush dl drupal
+chown -R www-data:www-data {$webroot}
+cp -p {$webroot}/sites/default/default.settings.php {$webroot}/sites/default/settings.php
+sudo a2ensite {$client_short_name}
+sudo apache2ctl graceful
 
-ch_exec("sudo adduser --disabled-password --gecos \"\" {$client_short_name}");
-echo "\n* Added user!\n";
-
-
+";
 echo "\n* Sorted! ... I think! :p\n";
 
-echo "\n* Enable your site with 'sudo a2ensite {$client_short_name}' and restart your server with 'sudo apache2ctl graceful'\n";
 
 ?>
