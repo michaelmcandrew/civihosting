@@ -1,6 +1,5 @@
 <?php
 require_once('include.php');
-
 $drupal_cron_clients=ch_query("SELECT client.name
 FROM client_cron
 JOIN client ON client.id = client_cron.client_id
@@ -12,4 +11,3 @@ while($client=mysql_fetch_object($drupal_cron_clients)){
 }
 exec(implode(";\n", $exec));
 ?>
-	
