@@ -23,9 +23,7 @@ while($database=mysql_fetch_object($databases)){
 		ch_exec("mkdir -p $path");
 		ch_exec("chmod 0755 $path");
 	}
-	echo "Dumping database {$database->name}\n";
 	ch_exec("mysqldump {$database->name} > {$path}/{$filename}");
-	echo "Zipping {$filename}\n";
 	ch_exec("gzip {$path}/{$filename}");	
 };
 ?>
