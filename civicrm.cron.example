@@ -1,0 +1,4 @@
+0,5,10,15,20,25,30,35,40,45,50,55 * * * ubuntu php /civihosting/cron.civimail_send.php
+2,7,12,17,22,27,32,37,42,47,52,57 * * * ubuntu php /civihosting/cron.civimail_process.php
+30 2 * * * ubuntu php cron.civimember_update.php
+20 * * * * ubuntu php cron.drupal.php
