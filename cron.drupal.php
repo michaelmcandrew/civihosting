@@ -7,7 +7,7 @@ JOIN cron ON cron.id = client_cron.cron_id
 WHERE cron.name='drupal'", 'force');
 
 while($client=mysql_fetch_object($drupal_cron_clients)){
-	$exec[]="drush -r /var/www/{$client->name} cron";
+	$exec[]="wget -O - -q -t 1 {$client->base_url}/cron.php";	
 }
 ch_exec(implode(";\n", $exec));
 ?>
