@@ -2,7 +2,7 @@
 require_once('include.php');
 $drupal_cron_clients=ch_query("SELECT client.name
 FROM client_cron
-JOIN client ON client.id = client_cron.client_id
+JOIN client ON client.id = client_cron.base_url
 JOIN cron ON cron.id = client_cron.cron_id
 WHERE cron.name='drupal'", 'force');
 
